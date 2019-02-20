@@ -1,0 +1,54 @@
+---
+
+- name: Set Jenkins environment variables
+  lineinfile:
+    dest: "{{ jenkins_environment_file }}"
+    regexp: "^{{ item.key }}="
+    line: "{{ item.key }}=\"{{ item.value }}\""
+  loop: "{{ jenkins_environment | dict2items }}"
+  notify: restart jenkins service
+  when: jenkins_environment is defined
+
+- name: Set Jenkins installation state
+  file:
+    access_time: preserve
+    modification_time: preserve
+    path: "{{ jenkins_home }}/.ansible_installed"
+    state: touch
+  register: jenkins_installed
+
+- name: Initialize Jenkins
+  service:
+    state: started
+    name: jenkins
+  when: jenkins_installed.changed
+  tags:
+    - skip_ansible_lint
+
+- name: Ensure Jenkins service state
+  service:
+    enabled: "{{ jenkins_service_enabled_state | default('yes') }}"
+    name: jenkins
+    state: "{{ jenkins_service_state | default('started') }}"
+
+- name: Wait for Jenkins initialization
+  wait_for:
+    path: "{{ jenkins_initial_password_file }}"
+    timeout: 300
+  when: jenkins_installed.changed
+  tags:
+    - skip_ansible_lint
+
+- name: Register the initial Jenkins admin password
+  command: "cat {{ jenkins_initial_password_file }}"
+  register: jenkins_initial_password_file_content
+  when: jenkins_installed.changed
+  tags:
+    - skip_ansible_lint
+
+- name: Display the initial Jenkins admin password
+  debug:
+    var: jenkins_initial_password_file_content.stdout_lines
+  when: jenkins_installed.changed
+  tags:
+    - skip_ansible_lint

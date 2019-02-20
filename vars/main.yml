@@ -1,0 +1,18 @@
+---
+
+# Name of the Jenkins package
+# Type: List
+jenkins_pkgs:
+  - jenkins
+
+# Are we managing the Jenkins user?
+# Type: Bool
+jenkins_manage_user: "{{ true if (jenkins_user != 'jenkins' or jenkins_group != 'jenkins' or jenkins_home != '/var/lib/jenkins' ) else false }}"
+
+# Determinate if a TLS or a Weekly Jenkins version is defined
+# Type: Bool
+jenkins_use_lts_version: "{{ true if ((jenkins_version | string).split('.') | length == 3 ) else false }}"
+
+# Location of the initial password file
+# Type: Str
+jenkins_initial_password_file: "{{ jenkins_home }}/secrets/initialAdminPassword"

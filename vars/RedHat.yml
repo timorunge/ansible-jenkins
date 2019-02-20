@@ -1,0 +1,17 @@
+---
+
+# Primary download URL for the Jenkins packages
+# Type: Str
+jenkins_download_url: "https://pkg.jenkins.io/redhat{{ '-stable' if (jenkins_use_lts_version) else '' }}"
+jenkins_pkg_name: "jenkins-{{ jenkins_version }}-1.1.noarch.rpm"
+jenkins_pkg_url: "{{ jenkins_download_url }}/{{ jenkins_pkg_name }}"
+
+# Type: List
+jenkins_dependency_pkgs:
+  - java-1.8.0-openjdk
+
+# Type: Str
+jenkins_environment_file: /etc/sysconfig/jenkins
+
+# Type: List
+jenkins_additional_dirs: []

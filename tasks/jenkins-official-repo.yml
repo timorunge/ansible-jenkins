@@ -1,0 +1,33 @@
+---
+
+- name: Add Jenkins APT signing key
+  apt_key:
+    state: present
+    url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
+  delay: 10
+  register: result
+  retries: 3
+  until: result is succeeded
+  when: >
+        (jenkins_use_official_repo) and
+        (ansible_os_family == "Debian")
+
+- name: Add Jenkins APT repository
+  apt_repository:
+    repo: deb https://pkg.jenkins.io/debian-stable binary/
+    state: present
+  when: >
+        (jenkins_use_official_repo) and
+        (ansible_os_family == "Debian")
+
+- name: Add Jenkins YUM repository
+  yum_repository:
+    baseurl: https://pkg.jenkins.io/redhat-stable
+    description: Jenkins YUM repository
+    gpgcheck: true
+    gpgkey:  https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+    name: jenkins.io
+    state: present
+  when: >
+        (jenkins_use_official_repo) and
+        (ansible_os_family == "RedHat")

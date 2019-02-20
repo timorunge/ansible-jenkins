@@ -1,0 +1,34 @@
+---
+
+- name: Create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop: "{{ jenkins_additional_dirs }}"
+
+- name: Install dependency packages
+  package:
+    name: "{{ jenkins_dependency_pkgs }}"
+    state: present
+    update_cache: "{{ omit if ((ansible_pkg_mgr == 'dnf') and (ansible_version is version('2.7', '<'))) else 'yes' }}"
+  delay: 10
+  register: result
+  retries: 3
+  until: result is succeeded
+  when: jenkins_dependency_pkgs
+
+- name: Create Jenkins group
+  group:
+    name: "{{ jenkins_group }}"
+    state: present
+  when: jenkins_manage_user
+
+- name: Create Jenkins user
+  user:
+    comment: "{{ jenkins_user }}"
+    create_home: yes
+    groups: "{{ jenkins_group }}"
+    home: "{{ jenkins_home }}"
+    name: "{{ jenkins_user }}"
+    shell: /bin/bash
+  when: jenkins_manage_user

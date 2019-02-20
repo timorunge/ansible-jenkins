@@ -1,0 +1,7 @@
+---
+
+- name: restart jenkins service
+  service:
+    enabled: "{{ jenkins_service_enabled_state | default('yes') }}"
+    name: jenkins
+    state: "{{ jenkins_service_state | default('restarted') }}"

@@ -1,0 +1,24 @@
+---
+
+# Primary download URL for the Jenkins packages
+# Type: Str
+jenkins_download_url: "https://pkg.jenkins.io/debian{{ '-stable' if (jenkins_use_lts_version) else '' }}/binary"
+jenkins_pkg_name: "jenkins_{{ jenkins_version }}_all.deb"
+jenkins_pkg_url: "{{ jenkins_download_url }}/{{ jenkins_pkg_name }}"
+
+# Type: List
+jenkins_dependency_pkgs:
+  - apt-transport-https
+  - daemon
+  - net-tools
+  - openjdk-7-jre
+  - psmisc
+  - xz-utils
+
+# Type: Str
+jenkins_environment_file: /etc/default/jenkins
+
+# Type: List
+jenkins_additional_dirs:
+  # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=863199
+  - /usr/share/man/man1

@@ -1,0 +1,32 @@
+---
+
+galaxy_info:
+  author: Timo Runge
+  company: N/A
+  description: >
+               This role installs and configures Jenkins -
+               the leading open source automation server.
+  role_name: jenkins
+  license: BSD-3-Clause
+  min_ansible_version: 2.7.0
+  platforms:
+  - name: EL
+    versions:
+      - 7
+  - name: Debian
+    versions:
+      - jessie
+      - stretch
+  - name: Ubuntu
+    versions:
+      - trusty
+      - xenial
+      - artful
+      - bionic
+      - cosmic
+  galaxy_tags:
+    - automation
+    - ci
+    - jenkins
+    - system
+dependencies: []

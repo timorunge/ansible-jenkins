@@ -1,0 +1,39 @@
+---
+
+- name: Install Jenkins from repository
+  package:
+    name: "{{ jenkins_pkgs }}"
+    state: present
+    update_cache: "{{ omit if ((ansible_pkg_mgr == 'dnf') and (ansible_version is version('2.7', '<'))) else 'yes' }}"
+  delay: 10
+  register: result
+  retries: 3
+  until: result is succeeded
+  notify: restart jenkins service
+  when: jenkins_use_official_repo
+
+- name: Install Jenkins from DEB package
+  apt:
+    deb: "{{ jenkins_pkg_url }}"
+    state: present
+  delay: 10
+  register: result
+  retries: 3
+  until: result is succeeded
+  notify: restart jenkins service
+  when: >
+        (not jenkins_use_official_repo) and
+        (ansible_os_family == "Debian")
+
+- name: Install Jenkins from YUM package
+  yum:
+    name: "{{ jenkins_pkg_url }}"
+    state: present
+  delay: 10
+  register: result
+  retries: 3
+  until: result is succeeded
+  notify: restart jenkins service
+  when: >
+        (not jenkins_use_official_repo) and
+        (ansible_os_family == "RedHat")

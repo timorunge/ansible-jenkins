@@ -1,0 +1,7 @@
+---
+
+- name: Facts for Jenkins service state
+  set_fact:
+    jenkins_service_enabled_state: no
+    jenkins_service_state: stopped
+  when: not jenkins_service_enabled

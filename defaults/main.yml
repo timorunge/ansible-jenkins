@@ -1,0 +1,61 @@
+---
+
+# Installation
+
+# If `jenkins_use_official_repo` is set to `true` the module will use the
+# jenkins.io repository for the installation of Jenkins. If set to `false`
+# the module will download the defined `jenkins_version` as a package from
+# jenkins.io and install the same.
+
+# Use the official LTS Jenkins repository.
+# Type: Bool
+jenkins_use_official_repo: true
+
+# The Jenkins version which should be installed if not using the repository.
+# Please keep in mind that the version naming differs if you're using TLS
+# or not.
+# An overview of available versions can be found on the Jenkins downloads
+# page: https://jenkins.io/download/
+# Type: Str
+# jenkins_version: 2.150.3 # TLS
+# jenkins_version: 2.165   # Weekly
+jenkins_version: 2.150.3
+
+# Configuration
+
+# The Jenkins user and group.
+# Type: Str
+jenkins_user: jenkins
+jenkins_group: "{{ jenkins_user }}"
+
+# The home of Jenkins.
+# Don't forget to change the `JENKINS_HOME` in the `jenkins_environment`.
+# If Jenkins is already up and running you should stop it before.
+# Type: Str
+jenkins_home: "/var/lib/{{ jenkins_user }}"
+
+# Enable / disable Jenkins as a service.
+# Type: Bool
+jenkins_service_enabled: true
+
+# Configure the Jenkins environment using /etc/defaults/jenkins for debian
+# based systems and /etc/sysconfig/jenkins for RedHat based systems.
+# Values are getting quoted automatically.
+# Type: Dict
+# Example (Debian based system):
+# jenkins_environment:
+#   NAME: "{{ jenkins_user }}"
+#   JAVA_ARGS: "-Djava.awt.headless=true"
+#   PIDFILE: /var/run/$NAME/$NAME.pid
+#   JENKINS_USER: $NAME
+#   JENKINS_GROUP: $NAME
+#   JENKINS_WAR: /usr/share/$NAME/$NAME.war
+#   JENKINS_HOME: "/var/lib/$NAME"
+#   RUN_STANDALONE: true
+#   JENKINS_LOG: /var/log/$NAME/$NAME.log
+#   JENKINS_ENABLE_ACCESS_LOG: '"no"'
+#   MAXOPENFILES: 8192
+#   HTTP_PORT: 8080
+#   PREFIX: $NAME
+#   JENKINS_ARGS: "--webroot=/var/cache/$NAME/war --httpPort=$HTTP_PORT"
+jenkins_environment: {}

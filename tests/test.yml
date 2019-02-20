@@ -1,0 +1,10 @@
+---
+
+- hosts: all
+  gather_facts: true
+  vars:
+    jenkins_environment:
+      HTTP_PORT: 8000
+      JENKINS_PORT: 8000
+  roles:
+    - timorunge.jenkins
