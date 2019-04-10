@@ -10,14 +10,14 @@ disable_logging: false
 
 docker_image_build_args:
   ansible_role: timorunge.jenkins
-  ansible_version: 2.7.7
+  ansible_version: 2.7.9
 
 docker_image_path: "__PATH__/tests/docker"
 
 docker_images:
   - CentOS_7
-  - Debian_8_10
-  - Debian_9_4
+  - Debian_8
+  - Debian_9
   - Ubuntu_14_04
   - Ubuntu_16_04
   - Ubuntu_17_10
@@ -28,14 +28,14 @@ docker_container_environments:
   pkg_official_repo:
     jenkins_use_official_repo: true
     skip_images:
-      - Debian_8_10
+      - Debian_8
       - Ubuntu_14_04
   "2_46_3":
     jenkins_use_official_repo: false
     jenkins_version: 2.46.3
     skip_images:
       - CentOS_7
-      - Debian_9_4
+      - Debian_9
       - Ubuntu_16_04
       - Ubuntu_17_10
       - Ubuntu_18_04
@@ -44,7 +44,7 @@ docker_container_environments:
     jenkins_use_official_repo: false
     jenkins_version: 2.150.3
     skip_images:
-      - Debian_8_10
+      - Debian_8
       - Ubuntu_14_04
 
 docker_container_volumes:
