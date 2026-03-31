@@ -1,3 +1,7 @@
+> **Status: Archived.**
+>
+> This repository is no longer maintained and is kept for reference only.
+
 # jenkins
 
 This role installs and configures [Jenkins](https://jenkins.io/) - the
@@ -146,8 +150,7 @@ repository (`jenkins_use_official_repo` is set to `false`).
 Beside that we're changing the `HTTP_PORT` to port `8000` and increasing the
 `MAXOPENFILES` to `16384`.
 
-This is basically the [test.yml](tests/test.yml) file which is used for
-testing.
+This is basically the test playbook which was used for testing.
 
 ```yaml
 - hosts: jenkins
@@ -220,57 +223,6 @@ Jenkins `2.46.3` is the latest LTS version which is running with `Java 7`.
 Newer versions require `Java 8`. Debian 8 and Ubuntu 14.04 are not providing
 packages for `Java 7`.
 
-## Testing
-
-[![Build Status](https://travis-ci.org/timorunge/ansible-jenkins.svg?branch=master)](https://travis-ci.org/timorunge/ansible-jenkins)
-
-Tests are done with [Docker](https://www.docker.com) and
-[docker_test_runner](https://github.com/timorunge/docker-test-runner) which
-brings up the following containers with different environment settings:
-
-- CentOS 7
-- Debian 8.10 (Jessie)
-- Debian 9.4 (Stretch)
-- Ubuntu 14.04 (Trusty Tahr)
-- Ubuntu 16.04 (Xenial Xerus)
-- Ubuntu 17.10 (Artful Aardvark)
-- Ubuntu 18.04 (Bionic Beaver)
-- Ubuntu 18.10 (Cosmic Cuttlefish)
-
-Ansible 2.7.9 is installed on all containers and a
-[test playbook](tests/test.yml) is getting applied.
-
-For further details and additional checks take a look at the
-[docker_test_runner configuration](tests/docker_test_runner.yml) and the
-[Docker entrypoint](tests/docker/docker-entrypoint.sh).
-An high level overview can be found in the following table:
-
-| Distribution | Version | Official repository | Package |
-|--------------|---------|---------------------|---------|
-| CentOS       | 7       | yes                 | 2.150.3 |
-| Debian       | 8.10    | no                  | 2.46.3  |
-| Debian       | 9.4     | yes                 | 2.150.3 |
-| Ubuntu       | 14.04   | no                  | 2.46.3  |
-| Ubuntu       | 16.04   | yes                 | 2.150.3 |
-| Ubuntu       | 17.10   | yes                 | 2.150.3 |
-| Ubuntu       | 18.04   | yes                 | 2.150.3 |
-| Ubuntu       | 18.10   | yes                 | 2.150.3 |
-
-```sh
-# Testing locally:
-curl https://raw.githubusercontent.com/timorunge/docker-test-runner/master/install.sh | sh
-./docker_test_runner.py -f tests/docker_test_runner.yml
-```
-
-Since the build time on Travis is limited for public repositories the
-automated tests are limited to:
-
-- CentOS 7
-- Debian 8.10 (Jessie)
-- Debian 9.4 (Stretch)
-- Ubuntu 16.04 (Xenial Xerus)
-- Ubuntu 18.04 (Bionic Beaver)
-
 ## Dependencies
 
 None
@@ -278,7 +230,3 @@ None
 ## License
 
 [BSD 3-Clause "New" or "Revised" License](LICENSE)
-
-## Author Information
-
-- Timo Runge
